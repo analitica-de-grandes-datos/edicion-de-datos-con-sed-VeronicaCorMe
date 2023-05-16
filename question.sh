@@ -20,14 +20,13 @@
 #  Usted debe escribir un script en bash que use sed para que realice 
 #  las siguientes acciones:
 #    
-#  * Convierta el formato de las fechas de DD/MM/YY a YYYY-MM-DD.
+#  * Convierta el formato de las fechas de DD/MM/YY a YYYY-MM-DD. ok
 #  
-#  * Transforme el archivo para que todos los campos nulos aparezcan como `\N`.
+#  * Transforme el archivo para que todos los campos nulos aparezcan como `\N`. ok
 #  
 #  * Reemplace los `;` por `,`.
 #  
-#  * Use el `.` para indicar decimales.
-#
+#  * Use el `.` para indicar decimales. ok
 #  El resultado del script se escribe en pantalla.
 #
 #  El programa se llamara por el evaluador tal como se indica a continuación:
@@ -39,5 +38,13 @@
 #  ...
 #  2014-09-01,A,3,100.4
 #
-#  >>> Escriba su codigo a partir de este punto <<<
-#
+sed 's/\,/\./;
+s/\(\/[0-9][0-9]\/\)/\120/;
+s/\;/\,/g;
+s/\([0-9]\)\/\([0-9]\)\/\([0-9][0-9][0-9][0-9]\)/0\1\/0\2\/\3/g2; 
+s/\([0-9][0-9]\)\/\([0-9][0-9]\)\/\([0-9][0-9][0-9][0-9]\)/\3-\2-\1/g;
+y/abcn/ABCN/;
+s/,N/\,\N/g;
+s/\,\,/\,\\N\,/g;
+s/\,N/\,\\N/g;
+s/\,.$/\,\\N/g' data.csv
